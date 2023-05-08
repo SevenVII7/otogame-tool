@@ -7,6 +7,9 @@
     <button @click="playVideo">play</button>
     <button @click="pauseVideo">pause</button>
     <button @click="stopVideo">stop</button>
+    <button @click="getDuration">getDuration</button>
+    <br>
+    {{ `currentTime: ${currentTime}` }}
     <br>
     {{ videoTitle }}
     <br>
@@ -23,23 +26,10 @@ import axios from "axios";
 import { ref, computed, onMounted } from "vue";
 
 const ifBlock = ref(null)
-let videoId = ref()
-let videoData = ref()
-let player = ref()
-let playerEvent = ref()
-let playerStateObj = ref()
-const videoTitle = computed(
-  function() {
-    let returnValue = null;
-    if (
-      videoData.value?.items.length <= 1 &&
-      videoData.value?.items[0]?.snippet?.title
-    ) {
-      returnValue = videoData.value.items[0].snippet.title
-    }
-    return returnValue
-  }
-)
+const videoId = ref()
+const player = ref()
+const playerEvent = ref()
+const playerStateObj = ref()
 const playingState = computed(
   function() {
     let returnValue = null;
@@ -50,7 +40,6 @@ const playingState = computed(
     return returnValue
   },
 )
-
 // 把YT IFrame Api塞到window裡啟動
 function initYoutubeIFrameAPI(id, onReadyFn, onStateChangeFn) {
   // 2. This code loads the IFrame Player API code asynchronously.
@@ -65,25 +54,14 @@ function initYoutubeIFrameAPI(id, onReadyFn, onStateChangeFn) {
     console.log('success');
     player.value = new window.YT.Player(ifBlock.value, {
       videoId: id,
+      controls: 0,
       events: {
         'onReady': onReadyFn,
         'onStateChange': onStateChangeFn
       }
     })
-    console.log('player', player)
   }
 }
-// 取得影片資料
-async function getVideoData(id) {
-  await axios.get(
-    `https://www.googleapis.com/youtube/v3/videos?id=${id}&key=${process.env.VUE_APP_YT_API_KEY}&part=snippet,contentDetails,statistics,status`
-  ).then((response) => {
-    videoData.value = response.data
-  }).catch((err) => {
-    console.log(err)
-  })
-}
-
 function playVideo() {
   player.value.playVideo();
 }
@@ -92,6 +70,34 @@ function pauseVideo() {
 }
 function stopVideo() {
   player.value.stopVideo();
+}
+const currentTime = ref(0)
+function getDuration() {
+  currentTime.value = player.value.getCurrentTime();
+}
+
+// 取得影片資料
+const videoData = ref()
+const videoTitle = computed(
+  function() {
+    let returnValue = null;
+    if (
+      videoData.value?.items.length <= 1 &&
+      videoData.value?.items[0]?.snippet?.title
+    ) {
+      returnValue = videoData.value.items[0].snippet.title
+    }
+    return returnValue
+  }
+)
+async function getVideoData(id) {
+  await axios.get(
+    `https://www.googleapis.com/youtube/v3/videos?id=${id}&key=${process.env.VUE_APP_YT_API_KEY}&part=snippet,contentDetails,statistics,status`
+  ).then((response) => {
+    videoData.value = response.data
+  }).catch((err) => {
+    console.log(err)
+  })
 }
 
 
@@ -117,8 +123,10 @@ const analytics = getAnalytics(app);
 const db = getDatabase(app);
 
 onMounted(() => {
+  console.log('onMounted')
   console.log(analytics)
   onValue(storageRef(db, 'videoId'), (snapshot) => {
+    console.log('onValue')
     const data = snapshot.val();
     videoId.value = data
 
