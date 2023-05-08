@@ -14,8 +14,6 @@
     {{ videoTitle }}
     <br>
     {{ playingState }}
-    <br>
-    {{ playerEvent }}
   </div>
 </template>
 
@@ -25,6 +23,8 @@
 import axios from "axios";
 import { ref, computed, onMounted } from "vue";
 
+
+// YT IFrame 播放器
 const ifBlock = ref(null)
 const videoId = ref()
 const player = ref()
@@ -76,6 +76,7 @@ function getDuration() {
   currentTime.value = player.value.getCurrentTime();
 }
 
+
 // 取得影片資料
 const videoData = ref()
 const videoTitle = computed(
@@ -105,7 +106,6 @@ async function getVideoData(id) {
 import * as firebase from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getDatabase, ref as storageRef, onValue } from "firebase/database";
-
 const firebaseConfig = {
   apiKey: process.env.VUE_APP_FIREBASE_API_KEY,
   authDomain: "new-test-50777.firebaseapp.com",
@@ -116,12 +116,12 @@ const firebaseConfig = {
   appId: "1:95976230755:web:25c061993b518a35bd8d56",
   measurementId: "G-NWK1GFDG4S"
 };
-
 // Initialize Firebase
 const app = firebase.initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const db = getDatabase(app);
 
+// onMounted
 onMounted(() => {
   console.log('onMounted')
   console.log(analytics)
