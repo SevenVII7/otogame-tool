@@ -1,0 +1,24 @@
+#lists{
+  width: 100%;
+  min-height: 100vh;
+  background-color: #f4f4f4;
+  .inner{
+    .list_box{
+      width: 100%;
+      padding: 30px 0;
+      .list_item{
+        width: 100%;
+        margin: 5px 0;
+        padding: 20px;
+        border-radius: 7px;
+        background-color: #fff;
+        transition: .2s;
+        box-shadow: 0 0 10px rgba(0,0,0,.15);
+        &:hover{
+          background-color: #00579A;
+          color: #fff;
+        }
+      }
+    }
+  }
+}
