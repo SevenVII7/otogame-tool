@@ -1,8 +1,52 @@
 <template>
-  <div>
+  <div id="video_feature">
     <div class="if_box">
       <div id="if_block" ref="ifBlock"></div>
     </div>
+    <div class="feature_cover" v-show="openFeatureCover" :style="{backgroundColor: `rgba(0,0,0,${coverOpacity/100})`}">
+      <div class="cover_feature" v-show="openFeatureSetting">
+        <small class="tag">
+          遮罩不透明度
+        </small>
+        <el-slider v-model="coverOpacity"/>
+      </div>
+      <div class="playing_feature" v-show="openFeatureSetting">
+        <el-button-group>
+          <el-button
+            type="success"
+            :disabled="!ytVideoId"
+            @click="playVideo"
+          >
+            播放
+          </el-button>
+          <el-button
+            type="primary"
+            :disabled="!ytVideoId"
+            @click="pauseVideo">
+            暫停
+          </el-button>
+          <el-button
+            type="primary"
+            :disabled="!ytVideoId"
+            @click="stopVideo"
+          >
+            停止
+          </el-button>
+      </el-button-group>
+      </div>
+    </div>
+    <!-- <div class="if_box">
+      <div id="if_block" ref="ifBlock"></div>
+    </div> -->
+    <!-- <br> -->
+    <!-- <button @click="playVideo">play</button>
+    <button @click="pauseVideo">pause</button>
+    <button @click="stopVideo">stop</button>
+    <button @click="getDuration">getDuration</button>
+    <br>
+    {{ `currentTime: ${currentTime}` }}
+    <br>
+    {{ playingState }} -->
   </div>
 </template>
 <script setup>
@@ -11,11 +55,15 @@ import { ref, computed, onMounted, defineProps, watch } from "vue";
 
 const props = defineProps({
   ytVideoId: String,
+  openFeatureCover: Boolean,
+  openFeatureSetting: Boolean,
 })
+
+const coverOpacity = ref(0)
 
 // YT IFrame 播放器
 const ifBlock = ref(null)
-const player = ref()
+const player = ref() // 播放器實體存放處
 const playerEvent = ref()
 const playerStateObj = ref()
 const playingState = computed(

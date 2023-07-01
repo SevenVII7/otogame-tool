@@ -1,5 +1,5 @@
 <template>
-  <div id="player" class="main_padding-b">
+  <div id="player">
     <div class="top">
       <router-link to="/list" class="back">
         <img src="@/assets/img/icon/arrow.svg" alt="">
@@ -7,51 +7,79 @@
       <div class="w1200 txt-center">
         {{ playerData.listName }}
       </div>
-      <div class="list_btn txt-white" @click="toggleListLightbox">
-        List
+      <div class="top_btns">
+        <el-button-group>
+          <el-button type="primary" @click="toggleOpenFeatureCover">
+            {{ (openFeatureCover) ? '觀看模式' : '練習模式' }}
+          </el-button>
+          <el-button type="primary" v-if="openFeatureCover" @click="toggleOpenFeatureSetting">
+            {{ (openFeatureSetting) ? '控制項隱藏' : '控制項開啟' }}
+          </el-button>
+          <el-button type="primary" @click="toggleListLightbox">
+            清單
+          </el-button>
+        </el-button-group>
       </div>
     </div>
     
     <div class="inner w1200">
-      <YtIframe :ytVideoId="ytVideoId"/>
-      <!-- <div class="if_box">
-        <div id="if_block" ref="ifBlock"></div>
-      </div> -->
-      <br>
-      <!-- <button @click="playVideo">play</button>
-      <button @click="pauseVideo">pause</button>
-      <button @click="stopVideo">stop</button>
-      <button @click="getDuration">getDuration</button>
-      <br>
-      {{ `currentTime: ${currentTime}` }}
-      <br>
-      {{ playingState }} -->
+      <YtIframe
+        :ytVideoId="ytVideoId"
+        :openFeatureCover="openFeatureCover"
+        :openFeatureSetting="openFeatureSetting"
+      />
     </div>
 
     <div class="video_set" :class="{active: videoListLightboxOpen}">
-      <template v-if="playerData.videoData.length > 0">
-        <div class="list">
-          <div
-            class="item"
-            v-for="item in playerData.videoData"
-            :key="item.id"
-            @click="videoSelect(item.yt_id)"
-          >
-            <div class="pic">
-              <figure :style="`background-image: url(${item.pic});`"></figure>
-            </div>
-            <div class="text">
-              <p>
-                {{ item.name }}
-              </p>
-            </div>
+      <div class="list">
+        <div class="add_item" @click="openDialog">
+          新增影片
+        </div>
+        <div
+          class="item"
+          v-for="item in playerData.videoData"
+          :key="item.id"
+          @click="videoSelect(item.yt_id)"
+        >
+          <div class="pic">
+            <figure :style="`background-image: url(${item.pic});`"></figure>
+          </div>
+          <div class="text">
+            <p>
+              {{ item.name }}
+            </p>
           </div>
         </div>
-      </template>
-      <div class="no_video" v-else>
-        暫無影片
       </div>
     </div>
+
+    <el-dialog
+      class="new_video_dialog"
+      title="新增 Youtube 影片"
+      v-model="newVideoVisible"
+    >
+      <div>
+        <p class="input_name">Youtube 影片 ID:</p>
+        <el-input v-model="newVideoId"></el-input>
+      </div>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button
+            type="info"
+            plain
+            @click="closeDialog"
+          >
+            取消
+          </el-button>
+          <el-button
+            type="primary"
+            @click="createVideo"
+          >
+            新增
+          </el-button>
+        </span>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
@@ -67,35 +95,57 @@ const props = defineProps({
   id: String,
 })
 
-const ytVideoId = ref()
+// 影片清單相關
+const newVideoVisible = ref(false);
+const newVideoId = ref('');
 const videoListLightboxOpen = ref(true)
-function videoSelect(videoId) {
-  videoListLightboxOpen.value = false
-  ytVideoId.value = videoId
-  // initYoutubeIFrameAPI(
-  //   ifBlock.value.id,
-  //   videoId,
-  //   (event) => {
-  //     console.log('onReady');
-  //     playerEvent.value = event
-  //     playerStateObj.value = window.YT.PlayerState
-  //   },
-  //   (event) => {
-  //     console.log('onStateChange');
-  //     playerEvent.value = event
-  //   }
-  // )
-}
 function toggleListLightbox(){
   videoListLightboxOpen.value = !videoListLightboxOpen.value
 }
+function openDialog(){
+  newVideoVisible.value = true
+}
+function closeDialog(){
+  newVideoVisible.value = false
+}
+async function createVideo(){
+  await axios.post(`${process.env.VUE_APP_API_KEY}/player_info`, {
+    ytId: newVideoId.value,
+    listId: props.id
+  })
+    .then((response) => {
+      console.log(response)
+      newVideoId.value = ''
+      closeDialog();
+      getPlayerInfo();
+    })
+    .catch((err)=>{
+      console.log(err)
+    });
+}
 
-
-// 取得API資料
+// 播放器相關
+const ytVideoId = ref()
 const playerData = ref({
   listName: null,
   videoData: []
 })
+const openFeatureCover = ref(false)
+const openFeatureSetting = ref(true)
+function videoSelect(videoId) {
+  videoListLightboxOpen.value = false
+  ytVideoId.value = videoId
+}
+function toggleOpenFeatureCover() {
+  openFeatureCover.value = !openFeatureCover.value
+  if (openFeatureCover.value) {
+    openFeatureSetting.value = true
+  }
+}
+function toggleOpenFeatureSetting() {
+  openFeatureSetting.value = !openFeatureSetting.value
+}
+// 取得API資料
 async function getPlayerInfo() {
   await axios.get(`${process.env.VUE_APP_API_KEY}/player_info?id=${props.id}`)
     .then((response) => {

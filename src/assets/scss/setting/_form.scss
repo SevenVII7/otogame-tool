@@ -1,7 +1,7 @@
 /* ----------FORM----------- */
-input[type=text],
-input[type=email],
-input[type=password],
+input[type=text]:not(.el-input__inner),
+input[type=email]:not(.el-input__inner),
+input[type=password]:not(.el-input__inner),
 textarea,
 select{
     width: 100%;
