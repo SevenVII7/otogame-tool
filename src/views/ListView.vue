@@ -6,8 +6,8 @@
         <div class="add_item" @click="openDialog">
           Create New List (我在遠端修改過)
         </div>
-	<template v-for="item in lists" :key="item.id">
-       	  <div class="list_item">
+        <template v-for="item in lists" :key="item.id">
+          <div class="list_item">
             <router-link :to="`/player/${item.id}`">
               {{ item.name }}
             </router-link>
