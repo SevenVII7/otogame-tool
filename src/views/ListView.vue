@@ -4,19 +4,17 @@
       <h3 class="txt-center">This is a list page</h3>
       <div class="list_box">
         <div class="add_item" @click="openDialog">
-          Create New List (我在遠端修改過)
+          Create New List
         </div>
         <template v-for="item in lists" :key="item.id">
-          <div class="list_item">
-            <router-link :to="`/player/${item.id}`">
-              {{ item.name }}
-            </router-link>
+          <router-link :to="`/player/${item.id}`" class="list_item">
+            {{ item.name }}
             <div class="features">
-              <el-button type="danger" plain @click="deleteList(item.id)">
+              <el-button type="danger" plain @click.prevent="deleteList(item.id)">
                 刪除
               </el-button>
             </div>
-          </div>
+          </router-link>
         </template>
       </div>
     </div>

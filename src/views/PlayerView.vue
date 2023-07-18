@@ -10,7 +10,7 @@
       <div class="top_btns">
         <el-button-group>
           <el-button type="primary" @click="toggleOpenFeatureCover">
-            {{ (openFeatureCover) ? '觀看模式' : '練習模式' }}
+            {{ (openFeatureCover) ? '觀看模式' : '遮罩模式' }}
           </el-button>
           <el-button type="primary" v-if="openFeatureCover" @click="toggleOpenFeatureSetting">
             {{ (openFeatureSetting) ? '控制項隱藏' : '控制項開啟' }}
@@ -39,6 +39,7 @@
           class="item"
           v-for="item in playerData.videoData"
           :key="item.id"
+          :class="{active: (ytVideoId === item.yt_id)}"
           @click="videoSelect(item.yt_id)"
         >
           <div class="pic">

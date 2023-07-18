@@ -59,7 +59,7 @@ const props = defineProps({
   openFeatureSetting: Boolean,
 })
 
-const coverOpacity = ref(0)
+const coverOpacity = ref(50)
 
 // YT IFrame 播放器
 const ifBlock = ref(null)
