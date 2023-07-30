@@ -17,20 +17,21 @@
             :disabled="!ytVideoId"
             @click="playVideo"
           >
-            播放
+            <i class="fas fa-play"></i>
           </el-button>
           <el-button
             type="primary"
             :disabled="!ytVideoId"
-            @click="pauseVideo">
-            暫停
+            @click="pauseVideo"
+          >
+            <i class="fas fa-pause"></i>
           </el-button>
           <el-button
             type="primary"
             :disabled="!ytVideoId"
             @click="stopVideo"
           >
-            停止
+            <i class="fas fa-stop"></i>
           </el-button>
       </el-button-group>
       </div>

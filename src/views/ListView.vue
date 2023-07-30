@@ -4,17 +4,15 @@
       <h3 class="txt-center">This is a list page</h3>
       <div class="list_box">
         <div class="add_item" @click="openDialog">
-          Create New List
+          <i class="fas fa-plus"></i>&nbsp;
+          建立新清單
         </div>
         <template v-for="item in lists" :key="item.id">
-          <router-link :to="`/player/${item.id}`" class="list_item">
-            {{ item.name }}
-            <div class="features">
-              <el-button type="danger" plain @click.prevent="deleteList(item.id)">
-                刪除
-              </el-button>
-            </div>
-          </router-link>
+          <ListItem
+            :id="item.id"
+            :name="item.name"
+            :fn="getLists"
+          />
         </template>
       </div>
     </div>
@@ -38,7 +36,7 @@
           </el-button>
           <el-button
             type="primary"
-            @click="createList"
+            @click="createListItem"
           >
             新增
           </el-button>
@@ -51,16 +49,18 @@
   /* eslint-disable  no-unused-vars */
   import { ref, onBeforeMount } from "vue";
   import axios from "axios";
+  import ListItem from '@/components/ListItem.vue'
 
   const newListVisible = ref(false);
   const newListName = ref('');
+
   function openDialog(){
     newListVisible.value = true
   }
   function closeDialog(){
     newListVisible.value = false
   }
-  async function createList(){
+  async function createListItem(){
     await axios.post(`${process.env.VUE_APP_API_KEY}/video_list`, {
       name: newListName.value
     })
@@ -74,23 +74,9 @@
         console.log(err)
       });
   }
-  async function deleteList(id){
-    await axios.delete(`${process.env.VUE_APP_API_KEY}/video_list`, {
-      data: {
-        id
-      }
-    })
-      .then((response) => {
-        console.log(response)
-        getLists();
-      })
-      .catch((err)=>{
-        console.log(err)
-      });
-  }
 
   const lists = ref();
-  async function getLists() {
+  async function getLists(){
     lists.value = [];
     await axios.get(`${process.env.VUE_APP_API_KEY}/video_list`)
       .then((response) => {

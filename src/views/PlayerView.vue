@@ -1,8 +1,9 @@
 <template>
   <div id="player">
     <div class="top">
-      <router-link to="/list" class="back">
-        <img src="@/assets/img/icon/arrow.svg" alt="">
+      <router-link :to="{name: 'Home'}" class="back">
+        <i class="fas fa-arrow-right"></i>
+        <!-- <img src="@/assets/img/icon/arrow.svg" alt=""> -->
       </router-link>
       <div class="w1200 txt-center">
         {{ playerData.listName }}
@@ -16,7 +17,7 @@
             {{ (openFeatureSetting) ? '控制項隱藏' : '控制項開啟' }}
           </el-button>
           <el-button type="primary" @click="toggleListLightbox">
-            清單
+            <i class="fas fa-list"></i>
           </el-button>
         </el-button-group>
       </div>
@@ -33,6 +34,7 @@
     <div class="video_set" :class="{active: videoListLightboxOpen}">
       <div class="list">
         <div class="add_item" @click="openDialog">
+          <i class="fas fa-plus"></i>&nbsp;
           新增影片
         </div>
         <div
@@ -86,8 +88,6 @@
 
 <script setup>
 /* eslint-disable  no-unused-vars */
-// @ is an alias to /src
-// import HelloWorld from '@/components/HelloWorld.vue'
 import axios from "axios";
 import { ref, computed, onMounted, defineProps } from "vue";
 import YtIframe from '@/components/YtIframe.vue'

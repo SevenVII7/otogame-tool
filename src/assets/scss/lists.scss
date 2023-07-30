@@ -35,6 +35,9 @@
         &:hover{
           background-color: #00579A;
           color: #fff;
+          *:not(input){
+            color: #fff;
+          }
         }
       }
     }
