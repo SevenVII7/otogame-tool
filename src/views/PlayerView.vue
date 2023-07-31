@@ -110,6 +110,14 @@ function closeDialog(){
   newVideoVisible.value = false
 }
 async function createVideo(){
+
+  if(newVideoId.value.length > 11) {
+    const result = newVideoId.value.match(/(?<=\?v=).*?(?=&)/);
+    if (result) {
+      newVideoId.value = result[0]; // 輸出：fKRIhvOghyU
+    }
+  }
+
   await axios.post(`${process.env.VUE_APP_API_KEY}/player_info`, {
     ytId: newVideoId.value,
     listId: props.id
