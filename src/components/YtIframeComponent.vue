@@ -88,7 +88,7 @@ function initYoutubeIFrameAPI(elem, id, onReadyFn, onStateChangeFn) {
 
   // 3. This function creates an <iframe> (and YouTube player)
   //    after the API code downloads. 
-  window.onYouTubeIframeAPIReady
+  window.onYouTubeIframeAPIReady && window.YT
     ? (() => {
         player.value = new window.YT.Player(elem, {
           // videoId: id,

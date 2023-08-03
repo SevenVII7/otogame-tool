@@ -1,3 +1,5 @@
+@import './helper/_variable.scss';
+
 #player:deep{
   width: 100%;
   min-height: calc(100vh - 50px);
@@ -13,7 +15,7 @@
     align-items: center;
     justify-content: center;
     color: #fff;
-    background-color: #00579A;
+    background-color: $color-dark_prime;
     text-align: center;
     position: fixed;
     top: 0;
@@ -61,72 +63,31 @@
       transform: translateX(0);
     }
     .list{
-      .add_item{
-        margin-bottom: 10px;
-        padding: 20px;
+      margin: -5px;
+      display: flex;
+      align-items: stretch;
+      flex-wrap: wrap;
+      .list_item{
+        width: 50%;
+        padding: 5px;
         display: flex;
+      }
+      .add_item{
+        width: 100%;
+        padding: 15px;
+        display: flex;
+        justify-content: center;
         align-items: center;
-        border-color: #00579A;
+        align-self: stretch;
+        border-color: $color-dark_prime;
         border-width: 2px;
         border-style: dashed;
         border-radius: 5px;
-        background-color: #ddeeff;
+        background-color: rgba($color-prime, .1);
         transition: .2s;
         cursor: pointer;
         &:hover{
-          background-color: #ccddff;
-        }
-      }
-      .item{
-        margin-bottom: 10px;
-        display: flex;
-        align-items: center;
-        border: 1px solid #ccc;
-        background-color: #fff;
-        border-radius: 5px;
-        position: relative;
-        overflow: hidden;
-        cursor: pointer;
-        &::after{
-          content: '';
-          width: calc(100% - 4px);
-          height: calc(100% - 4px);
-          border: 2px solid #00579A;
-          border-radius: 5px;
-          opacity: 0;
-          transition: .2s;
-          position: absolute;
-          top: 0;
-          left: 0;
-          pointer-events: none;
-        }
-        &.active,
-        &:hover{
-          &::after{
-            opacity: 1;
-          }
-        }
-        .pic{
-          width: 150px;
-          background-color: #ccc;
-          figure{
-            width: 100%;
-            padding-bottom: 56%;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-          }
-        }
-        .text{
-          width: calc(100% - 150px);
-          margin-left: 10px;
-          padding-right: 20px;
-          p{
-            width: 100%;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-          }
+          background-color: rgba($color-prime, .2);
         }
       }
     }

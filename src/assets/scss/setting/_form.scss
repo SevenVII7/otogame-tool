@@ -149,7 +149,7 @@ input[type=radio]:not(old):checked + label > span:before{
     margin           : auto;
     top: 0;right: 0;bottom: 0;left: 0;
     position         : absolute;
-    background       : $color-theme;
+    background       : $color-prime;
 }
 input[type=checkbox]:not(old):checked + label > span:before{
     content     : '';
@@ -160,7 +160,7 @@ input[type=checkbox]:not(old):checked + label > span:before{
     margin           : auto;
     top: 0;right: 0;bottom: 0;left: 0;
     position         : absolute;
-    background       : $color-theme;
+    background       : $color-prime;
 }
 
 // upload file

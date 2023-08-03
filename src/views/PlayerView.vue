@@ -33,25 +33,24 @@
 
     <div class="video_set" :class="{active: videoListLightboxOpen}">
       <div class="list">
-        <div class="add_item" @click="openDialog">
-          <i class="fas fa-plus"></i>&nbsp;
-          新增影片
+        <div class="list_item">
+          <div class="add_item" @click="openDialog">
+            <i class="fas fa-plus"></i>&nbsp;
+            新增影片
+          </div>
         </div>
         <div
-          class="item"
+          class="list_item"
           v-for="item in playerData.videoData"
           :key="item.id"
-          :class="{active: (ytVideoId === item.yt_id)}"
-          @click="videoSelect(item.yt_id)"
         >
-          <div class="pic">
-            <figure :style="`background-image: url(${item.pic});`"></figure>
-          </div>
-          <div class="text">
-            <p>
-              {{ item.name }}
-            </p>
-          </div>
+          <VideoItem
+            :pic="item.pic"
+            :name="item.name"
+            :class="{active: (ytVideoId === item.yt_id)}"
+            @videoItemClick="videoSelect(item.yt_id)"
+            @deleteVideoItem="deleteVideo(item.id)"
+          />
         </div>
       </div>
     </div>
@@ -90,7 +89,8 @@
 /* eslint-disable  no-unused-vars */
 import axios from "axios";
 import { ref, computed, onMounted, defineProps } from "vue";
-import YtIframe from '@/components/YtIframe.vue'
+import YtIframe from '@/components/YtIframeComponent.vue'
+import VideoItem from '@/components/VideoItemComponent.vue'
 
 const props = defineProps({
   id: String,
@@ -110,7 +110,6 @@ function closeDialog(){
   newVideoVisible.value = false
 }
 async function createVideo(){
-
   if(newVideoId.value.length > 11) {
     const result = newVideoId.value.match(/(?<=\?v=).*?(?=&)/);
     if (result) {
@@ -131,6 +130,9 @@ async function createVideo(){
     .catch((err)=>{
       console.log(err)
     });
+}
+function deleteVideo(){
+  console.log('deleteVideo')
 }
 
 // 播放器相關
@@ -175,7 +177,7 @@ onMounted(() => {
 </script>
 <style
   scoped
-  src="@/assets/scss/player.scss"
   lang="scss"
+  src="@/assets/scss/player.scss"
 >
 </style>

@@ -9,7 +9,7 @@ const routes = [
   {
     path: '/home',
     name: 'Home',
-    component: () => import('../views/ListView.vue')
+    component: () => import('../views/HomeView.vue')
   },
   {
     path: '/player/:id',

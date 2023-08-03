@@ -1,0 +1,64 @@
+@import './helper/_variable.scss';
+
+#home:deep{
+  width: 100%;
+  min-height: 100vh;
+  background-color: #f4f4f4;
+  .inner{
+    display: flex;
+    flex-wrap: wrap;
+    .bookmark_box{
+      width: 100%;
+      padding: 15px;
+      .title{
+        margin-bottom: 20px;
+      }
+      .bookmark_itembox{
+        margin: 0 -5px;
+        display: flex;
+        .bookmark_item{
+          width: 33.333%;
+          padding: 0 5px;
+          >small{
+            margin-bottom: 5px;
+            display: block;
+          }
+        }
+      }
+    }
+    .current_box{
+      width: 50%;
+      padding: 15px;
+      .title{
+        margin-bottom: 20px;
+      }
+    }
+    .list_box{
+      width: 50%;
+      padding: 15px;
+      .title{
+        margin-bottom: 20px;
+      }
+      .add_item{
+        width: 100%;
+        margin: 10px 0;
+        padding: 15px;
+        border-color: $color-dark_prime;
+        border-width: 2px;
+        border-style: dashed;
+        border-radius: 7px;
+        background-color: rgba($color-prime, .1);
+        transition: .2s;
+        cursor: pointer;
+        &:hover{
+          background-color: rgba($color-prime, .2);
+        }
+      }
+    }
+  }
+  .new_name_dialog{
+    .input_name{
+      margin-bottom: 10px;
+    }
+  }
+}

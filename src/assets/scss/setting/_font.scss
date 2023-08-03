@@ -4,7 +4,7 @@
 /* ----------TEXT----------- */
 html {
   font-size: 16px;
-  color: $color-dark_gray;
+  color: $color-black;
 }
 body {
   font-family: $font-set;
@@ -32,56 +32,37 @@ small {
   font: inherit;
   color: inherit;
   font-weight: 400;
-  line-height: 1.5;
+  line-height: 1.4;
   letter-spacing: 0.8px;
   text-transform: none;
 }
-/* 55 */
-h1,
-.h1 {
-  font-size: 4rem;
-  letter-spacing: 4px;
-}
-/* 45 */
-h2,
-.h2 {
-  font-size: 2.85rem;
-  letter-spacing: 2.5px;
-}
+/* 62 */
+h1, .h1 { font-size: 62px; }
+/* 48 */
+h2, .h2 { font-size: 48px; }
 /* 40 */
-h3,
-.h3 {
-  font-size: 2.5rem;
-  letter-spacing: 2.5px;
-}
+h3, .h3 { font-size: 40px; }
 /* 30 */
-h4,
-.h4 {
-  font-size: 1.88rem;
-  letter-spacing: 2px;
-}
-/* 25 */
-h5, .h5 { font-size: 1.5rem; }
+h4, .h4 { font-size: 30px; }
+/* 24 */
+h5, .h5 { font-size: 24px; }
 /* 20 */
-h6, .h6 { font-size: 1.25rem; }
+h6, .h6 { font-size: 20px; }
 /* 18 */
-.p-18 { font-size: 1.15rem; }
+.p-18 { font-size: 18px; }
 /* 16 */
-p, .p { font-size: 1rem; }
+p, .p { font-size: 16px; }
 a {
-  font-size: 1rem;
-  display: inline-block;
+  font-size: 16px;
   text-decoration: none;
 }
 /* 14 */
-small, .small {
-  font-size: 0.85rem;
-  letter-spacing: 0.5px;
-}
+small, .small { font-size: 14px; }
 /* 12 */
-.supersmall { font-size: 0.75rem; }
+.supersmall { font-size: 12px; }
 
 
+// letter-spacing
 .ls1 { letter-spacing: 1px; }
 .ls2 { letter-spacing: 2px; }
 .ls3 { letter-spacing: 3px; }
@@ -95,8 +76,12 @@ small, .small {
 
 
 // font color
-.txt-theme { color: $color-theme; }
-// .txt-theme_light { color: $color-theme_light; }
+.txt-prime { color: $color-prime; }
+.txt-dark_prime { color: $color-dark_prime; }
+.txt-light_prime { color: $color-light_prime;}
+.txt-sub_prime { color: $color-sub_prime }
+.txt-dark_sub_prime { color: $color-dark_sub_prime }
+
 .txt-dark_gray { color: $color-dark_gray; }
 .txt-gray { color: $color-gray; }
 .txt-pale_gray { color: $color-pale_gray; }
@@ -122,10 +107,7 @@ b, strong { font-weight: bolder; }
 
 /* ----------RWD----------------------- */
 @media screen and (max-width: 1440px) {
-  h1,
-  .h1 {
-    font-size: 3.2rem;
-  }
+  h1, .h1 { font-size: 3.2rem; }
 }
 @media screen and (max-width: 1366px) {
 }
@@ -134,58 +116,21 @@ b, strong { font-weight: bolder; }
 @media screen and (max-width: 1024px) {
 }
 @media screen and (max-width: 1023px) {
-  h1,
-  .h1 {
-    font-size: 2.8rem;
-  }
-  h2,
-  .h2 {
-    font-size: 2.2rem;
-  }
-  h3,
-  .h3 {
-    font-size: 1.8rem;
-  }
-  h4,
-  .h4 {
-    font-size: 1.5rem;
-  }
-  h5,
-  .h5 {
-    font-size: 1.15rem;
-    letter-spacing: 2px;
-  }
+  h1, .h1 { font-size: 2.8rem; }
+  h2, .h2 { font-size: 2.2rem; }
+  h3, .h3 { font-size: 1.8rem; }
+  h4, .h4 { font-size: 1.5rem; }
+  h5, .h5 { font-size: 1.15rem; }
 }
 @media screen and (max-width: 768px) {
-  html {
-    font-size: 14px;
-  }
-  h1,
-  .h1 {
-    font-size: 2.3rem;
-  }
-  h2,
-  .h2 {
-    font-size: 2rem;
-  }
-  h3,
-  .h3 {
-    font-size: 1.5rem;
-  }
-  h4,
-  .h4 {
-    font-size: 1.3rem;
-  }
-  h5,
-  .h5 {
-    font-size: 1.2rem;
-  }
-  h6,
-  .h6 { font-size: 1.1rem; }
-  small,
-  .small {
-    font-size: .95rem;
-  }
+  html { font-size: 14px; }
+  h1, .h1 { font-size: 2.3rem; }
+  h2, .h2 { font-size: 2rem; }
+  h3, .h3 { font-size: 1.5rem; }
+  h4, .h4 { font-size: 1.3rem; }
+  h5, .h5 { font-size: 1.2rem; }
+  h6, .h6 { font-size: 1.1rem; }
+  small, .small { font-size: .95rem; }
 }
 @media screen and (max-width: 620px) {
 }
