@@ -19,7 +19,7 @@
       </div>
       <div class="current_box">
         <h5 class="title txt-bold txt-dark_prime">最近活動</h5>
-        <template v-for="item in CollectionLists" :key="item.id">
+        <template v-for="item in collectionLists" :key="item.id">
           <Collection
             :id="item.id"
             :name="item.name"
@@ -29,11 +29,11 @@
       </div>
       <div class="list_box">
         <h5 class="title txt-bold txt-dark_prime">合輯</h5>
-        <div class="add_item" v-if="CollectionLists.length < maxCollection" @click="openDialog">
+        <div class="add_item" v-if="collectionLists.length < maxCollection" @click="openDialog">
           <i class="fas fa-plus"></i>&nbsp;
-          建立新合輯 ({{ CollectionLists.length }}/{{ maxCollection }})
+          建立新合輯 ({{ collectionLists.length }}/{{ maxCollection }})
         </div>
-        <template v-for="item in CollectionLists" :key="item.id">
+        <template v-for="item in collectionLists" :key="item.id">
           <Collection
             :id="item.id"
             :name="item.name"
@@ -82,7 +82,7 @@
 
 
   const maxCollection = ref(5)
-  const CollectionLists = ref([]);
+  const collectionLists = ref([]);
   const newListVisible = ref(false);
   const newListName = ref('');
 
@@ -93,31 +93,33 @@
     newListVisible.value = false
   }
   async function createCollection(){
-    if (CollectionLists.value.length < maxCollection.value) {
+    if (collectionLists.value.length < maxCollection.value) {
       try {
         const res = await apiCreateCollection({ name: newListName.value })
-        if (res.data) {
+        if (res.data && res.status >= 200 && res.status < 400) {
           newListName.value = ''
           closeDialog();
           toast({msg: '建立成功'});
           getCollectionList();
-        } 
+        } else {
+          toast({msg: '建立失敗', type: 'error'});
+        }
       } catch (err) {
-        console.log(err)
-        toast({msg: '建立失敗'});
+        toast({msg: '建立失敗', type: 'error'});
       }
     }
   }
   async function getCollectionList(){
     try {
       const res = await apiGetCollectionList()
-      CollectionLists.value = [];
-      if (res.data) {
-        CollectionLists.value = res.data
-      } 
+      collectionLists.value = [];
+      if (res.data && res.status >= 200 && res.status < 400) {
+        collectionLists.value = res.data
+      } else {
+        toast({msg: '無法取得清單', type: 'error'});
+      }
     } catch (err) {
-      console.log(err)
-      CollectionLists.value = [];
+      collectionLists.value = [];
       toast({msg: '無法取得清單', type: 'error'});
     }
   }

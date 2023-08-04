@@ -89,6 +89,8 @@
 /* eslint-disable  no-unused-vars */
 import axios from "axios";
 import { ref, computed, onMounted, defineProps } from "vue";
+import { apiCreateVideo } from '@/utils/apiHelper'
+import { toast } from '@/utils/utils'
 import YtIframe from '@/components/YtIframeComponent.vue'
 import VideoItem from '@/components/VideoItemComponent.vue'
 
@@ -117,19 +119,24 @@ async function createVideo(){
     }
   }
 
-  await axios.post(`${process.env.VUE_APP_API_KEY}/player_info`, {
-    ytId: newVideoId.value,
-    listId: props.id
-  })
-    .then((response) => {
-      console.log(response)
+  try {
+    const res = await apiCreateVideo({
+      ytId: newVideoId.value,
+      listId: props.id
+    })
+    if (res.data && res.status >= 200 && res.status < 400) {
+      toast({msg: '影片建立成功'});
       newVideoId.value = ''
       closeDialog();
       getPlayerInfo();
-    })
-    .catch((err)=>{
-      console.log(err)
-    });
+    } else {
+      toast({msg: '影片建立失敗', type: 'error'});
+      closeDialog();
+    }
+  } catch (err) {
+    toast({msg: '影片建立失敗', type: 'error'});
+    closeDialog();
+  }
 }
 function deleteVideo(){
   console.log('deleteVideo')

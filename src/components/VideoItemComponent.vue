@@ -8,7 +8,7 @@
         {{ props.name }}
       </p>
     </div>
-    <div class="features">
+    <div class="features" v-if="editPermission">
       <span @click="handleDelete">
         <i class="fas fa-trash"></i>
       </span>
@@ -20,7 +20,8 @@ import { defineProps, defineEmits } from "vue";
 
 const props = defineProps({
   name: String,
-  pic: String
+  pic: String,
+  editPermission: Boolean
 });
 const emits = defineEmits(['videoItemClick', 'deleteVideoItem']);
 

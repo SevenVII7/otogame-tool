@@ -57,7 +57,7 @@
 <script setup>
   /* eslint-disable  no-unused-vars */
   import { ref, computed, onMounted, defineProps, nextTick } from "vue";
-  import { apiUpdateCollection } from '@/utils/apiHelper'
+  import { apiUpdateCollection, apiDeleteCollection } from '@/utils/apiHelper'
   import { toast } from '@/utils/utils'
   import axios from "axios";
 
@@ -72,7 +72,6 @@
   const renameInput = ref(null)
 
   async function updateCollection(id, name){
-    console.log(id, rename.value)
     try {
       const res = await apiUpdateCollection({ id, name })
       if (res.data) {
@@ -85,27 +84,24 @@
     }
   }
   async function deleteCollection(id){
-    await axios.delete(`${process.env.VUE_APP_API_KEY}/video_list`, {
-      data: {
-        id
-      }
-    })
-      .then((response) => {
-        console.log(response)
+    try {
+      const res = await apiDeleteCollection({ id })
+      if (res.data) {
         toast({msg: '刪除成功'})
         props.reloadListFn()
-      })
-      .catch((err)=>{
-        console.log(err)
-        toast({msg: '刪除失敗', type: 'error'})
-      });
+      } 
+    } catch (err) {
+      toast({msg: '刪除失敗', type: 'error'})
+    }
   }
   async function handleRename(status, { id, newName } = {}) {
     rename.value = props.name
     renameStatus.value = status
     if (status) {
       await nextTick()
-      renameInput.value.focus()
+      setTimeout(() => {
+        renameInput.value.focus()
+      }, 100);
     }
     if (!status && id && newName) {
       updateCollection(id, newName)
