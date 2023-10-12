@@ -7,8 +7,7 @@
   <router-view/>
 </template>
 
-<script>
-// import '@/assets/scss/main.scss'
+<script setup>
 </script>
 
 <style
