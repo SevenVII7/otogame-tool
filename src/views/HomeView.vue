@@ -140,4 +140,4 @@ onBeforeMount(() => {
   getCollectionList()
 })
 </script>
-<style scoped src="@/assets/scss/home.scss" lang="scss"></style>
+<style scoped src="@/assets/scss/page/home.scss" lang="scss"></style>

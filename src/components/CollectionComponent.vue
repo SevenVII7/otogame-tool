@@ -44,7 +44,7 @@
 </template>
 <script lang="ts" setup>
 /* eslint-disable  no-unused-vars */
-import { ref, computed, onMounted, defineProps, nextTick } from 'vue'
+import { ref, computed, onMounted, nextTick } from 'vue'
 import { apiUpdateCollection, apiDeleteCollection } from '@/utils/apiHelper'
 import { toast } from '@/utils/utils'
 import axios from 'axios'

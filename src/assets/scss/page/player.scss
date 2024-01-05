@@ -1,6 +1,6 @@
-@import './helper/_variable.scss';
+@import '../helper/_variable.scss';
 
-:deep(#player){
+#player {
   width: 100%;
   min-height: calc(100vh - 50px);
   margin-top: 50px;

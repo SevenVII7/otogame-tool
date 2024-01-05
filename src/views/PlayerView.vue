@@ -106,15 +106,15 @@
 <script lang="ts" setup>
 /* eslint-disable  no-unused-vars */
 import axios from 'axios'
-import { ref, computed, onMounted, defineProps } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { apiCreateVideo } from '@/utils/apiHelper'
 import { toast } from '@/utils/utils'
 import YtIframe from '@/components/YtIframeComponent.vue'
 import VideoItem from '@/components/VideoItemComponent.vue'
 
-const props = defineProps({
+const props = defineProps<{
   id: String
-})
+}>()
 
 // 影片清單相關
 const newVideoVisible = ref(false)
@@ -201,4 +201,4 @@ onMounted(() => {
   getPlayerInfo()
 })
 </script>
-<style scoped lang="scss" src="@/assets/scss/player.scss"></style>
+<style scoped lang="scss" src="@/assets/scss/page/player.scss"></style>
