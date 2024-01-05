@@ -4,7 +4,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 const routes = [
   {
     path: '/:pathMatch(.*)*', // 當連到不是我們自訂義的路由時
-    redirect: '/home', // 重新指向路由回首頁
+    redirect: '/home' // 重新指向路由回首頁
   },
   {
     path: '/home',
@@ -15,7 +15,7 @@ const routes = [
     path: '/player/:id',
     name: 'Player',
     component: () => import('../views/PlayerView.vue'),
-    props: true,
+    props: true
   },
   {
     path: '/login',
@@ -38,7 +38,7 @@ const routes = [
 ]
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes
 })
 

@@ -5,9 +5,7 @@
     </div>
     <div class="inner w1000">
       <div class="login_form">
-        <h3 class="txt-bold">
-          Sign Up
-        </h3>
+        <h3 class="txt-bold">Sign Up</h3>
         <div class="input_block">
           <el-input placeholder="使用者名稱"></el-input>
         </div>
@@ -32,18 +30,12 @@
   </div>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 /* eslint-disable  no-unused-vars */
-import axios from "axios";
-import { ref, computed, onMounted, defineProps } from "vue";
-
+import axios from 'axios'
+import { ref, computed, onMounted } from 'vue'
 
 // onMounted
-onMounted(() => {});
+onMounted(() => {})
 </script>
-<style
-  scoped
-  src="@/assets/scss/login.scss"
-  lang="scss"
->
-</style>
+<style scoped src="@/assets/scss/page/login.scss" lang="scss"></style>
