@@ -1,13 +1,21 @@
 import { h } from "vue";
 import { ElNotification } from 'element-plus'
 
+type toastP = {
+  title?:string
+  msg?: string
+  msgColor?: string
+  type?: 'success' | 'error'
+  duration?: number
+}
+
 const toast = ({
-  title = null,
-  msg = null,
-  msgColor = null,
+  title,
+  msg,
+  msgColor,
   type = 'success',
   duration = 1000
-} = {}) => {
+}: toastP = {}) => {
   ElNotification({
     type,
     title,

@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const apiBase = axios.create({
-  baseURL: `${process.env.VUE_APP_API_KEY}`,
+  baseURL: `${import.meta.env.VUE_APP_API_KEY}`,
   headers: {
     accept: 'application/json'
   }

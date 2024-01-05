@@ -1,7 +1,10 @@
 <template>
   <div id="player">
     <div class="top">
-      <router-link :to="{name: 'Home'}" class="back">
+      <router-link
+        :to="{ name: 'Home' }"
+        class="back"
+      >
         <i class="fas fa-arrow-right"></i>
         <!-- <img src="@/assets/img/icon/arrow.svg" alt=""> -->
       </router-link>
@@ -10,19 +13,29 @@
       </div>
       <div class="top_btns">
         <el-button-group>
-          <el-button type="primary" @click="toggleOpenFeatureCover">
-            {{ (openFeatureCover) ? '觀看模式' : '遮罩模式' }}
+          <el-button
+            type="primary"
+            @click="toggleOpenFeatureCover"
+          >
+            {{ openFeatureCover ? '觀看模式' : '遮罩模式' }}
           </el-button>
-          <el-button type="primary" v-if="openFeatureCover" @click="toggleOpenFeatureSetting">
-            {{ (openFeatureSetting) ? '控制項隱藏' : '控制項開啟' }}
+          <el-button
+            type="primary"
+            v-if="openFeatureCover"
+            @click="toggleOpenFeatureSetting"
+          >
+            {{ openFeatureSetting ? '控制項隱藏' : '控制項開啟' }}
           </el-button>
-          <el-button type="primary" @click="toggleListLightbox">
+          <el-button
+            type="primary"
+            @click="toggleListLightbox"
+          >
             <i class="fas fa-list"></i>
           </el-button>
         </el-button-group>
       </div>
     </div>
-    
+
     <div class="inner w1200">
       <YtIframe
         :ytVideoId="ytVideoId"
@@ -31,12 +44,17 @@
       />
     </div>
 
-    <div class="video_set" :class="{active: videoListLightboxOpen}">
+    <div
+      class="video_set"
+      :class="{ active: videoListLightboxOpen }"
+    >
       <div class="list">
         <div class="list_item">
-          <div class="add_item" @click="openDialog">
-            <i class="fas fa-plus"></i>&nbsp;
-            新增影片
+          <div
+            class="add_item"
+            @click="openDialog"
+          >
+            <i class="fas fa-plus"></i>&nbsp; 新增影片
           </div>
         </div>
         <div
@@ -47,7 +65,7 @@
           <VideoItem
             :pic="item.pic"
             :name="item.name"
-            :class="{active: (ytVideoId === item.yt_id)}"
+            :class="{ active: ytVideoId === item.yt_id }"
             @videoItemClick="videoSelect(item.yt_id)"
             @deleteVideoItem="deleteVideo(item.id)"
           />
@@ -85,37 +103,37 @@
   </div>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 /* eslint-disable  no-unused-vars */
-import axios from "axios";
-import { ref, computed, onMounted, defineProps } from "vue";
+import axios from 'axios'
+import { ref, computed, onMounted, defineProps } from 'vue'
 import { apiCreateVideo } from '@/utils/apiHelper'
 import { toast } from '@/utils/utils'
 import YtIframe from '@/components/YtIframeComponent.vue'
 import VideoItem from '@/components/VideoItemComponent.vue'
 
 const props = defineProps({
-  id: String,
+  id: String
 })
 
 // 影片清單相關
-const newVideoVisible = ref(false);
-const newVideoId = ref('');
+const newVideoVisible = ref(false)
+const newVideoId = ref('')
 const videoListLightboxOpen = ref(true)
-function toggleListLightbox(){
+function toggleListLightbox() {
   videoListLightboxOpen.value = !videoListLightboxOpen.value
 }
-function openDialog(){
+function openDialog() {
   newVideoVisible.value = true
 }
-function closeDialog(){
+function closeDialog() {
   newVideoVisible.value = false
 }
-async function createVideo(){
-  if(newVideoId.value.length > 11) {
-    const result = newVideoId.value.match(/(?<=\?v=).*?(?=&)/);
+async function createVideo() {
+  if (newVideoId.value.length > 11) {
+    const result = newVideoId.value.match(/(?<=\?v=).*?(?=&)/)
     if (result) {
-      newVideoId.value = result[0]; // 輸出：fKRIhvOghyU
+      newVideoId.value = result[0] // 輸出：fKRIhvOghyU
     }
   }
 
@@ -125,20 +143,20 @@ async function createVideo(){
       listId: props.id
     })
     if (res.data && res.status >= 200 && res.status < 400) {
-      toast({msg: '影片建立成功'});
+      toast({ msg: '影片建立成功' })
       newVideoId.value = ''
-      closeDialog();
-      getPlayerInfo();
+      closeDialog()
+      getPlayerInfo()
     } else {
-      toast({msg: '影片建立失敗', type: 'error'});
-      closeDialog();
+      toast({ msg: '影片建立失敗', type: 'error' })
+      closeDialog()
     }
   } catch (err) {
-    toast({msg: '影片建立失敗', type: 'error'});
-    closeDialog();
+    toast({ msg: '影片建立失敗', type: 'error' })
+    closeDialog()
   }
 }
-function deleteVideo(){
+function deleteVideo() {
   console.log('deleteVideo')
 }
 
@@ -165,26 +183,22 @@ function toggleOpenFeatureSetting() {
 }
 // 取得API資料
 async function getPlayerInfo() {
-  await axios.get(`${process.env.VUE_APP_API_KEY}/player_info?id=${props.id}`)
+  await axios
+    .get(`${import.meta.env.VUE_APP_API_KEY}/player_info?id=${props.id}`)
     .then((response) => {
       console.log(response)
       playerData.value.listName = response.data.name
       playerData.value.videoData = response.data.videoData
     })
-    .catch((err)=>{
+    .catch((err) => {
       console.log(err.response)
-    });
+    })
 }
 
 // onMounted
 onMounted(() => {
   console.log('onMounted')
-  getPlayerInfo();
-});
+  getPlayerInfo()
+})
 </script>
-<style
-  scoped
-  lang="scss"
-  src="@/assets/scss/player.scss"
->
-</style>
+<style scoped lang="scss" src="@/assets/scss/player.scss"></style>
