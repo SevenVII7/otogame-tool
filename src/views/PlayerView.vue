@@ -20,8 +20,8 @@
             {{ openFeatureCover ? '觀看模式' : '遮罩模式' }}
           </el-button>
           <el-button
-            type="primary"
             v-if="openFeatureCover"
+            type="primary"
             @click="toggleOpenFeatureSetting"
           >
             {{ openFeatureSetting ? '控制項隱藏' : '控制項開啟' }}
@@ -38,9 +38,9 @@
 
     <div class="inner w1200">
       <YtIframe
-        :ytVideoId="ytVideoId"
-        :openFeatureCover="openFeatureCover"
-        :openFeatureSetting="openFeatureSetting"
+        :yt-video-id="ytVideoId"
+        :open-feature-cover="openFeatureCover"
+        :open-feature-setting="openFeatureSetting"
       />
     </div>
 
@@ -54,29 +54,30 @@
             class="add_item"
             @click="openDialog"
           >
-            <i class="fas fa-plus"></i>&nbsp; 新增影片
+            <i class="fas fa-plus"></i>
+            &nbsp; 新增影片
           </div>
         </div>
         <div
-          class="list_item"
           v-for="item in playerData.videoData"
           :key="item.id"
+          class="list_item"
         >
           <VideoItem
             :pic="item.pic"
             :name="item.name"
-            :class="{ active: ytVideoId === item.yt_id }"
-            @videoItemClick="videoSelect(item.yt_id)"
-            @deleteVideoItem="deleteVideo(item.id)"
+            :class="{ active: ytVideoId === item.ytId }"
+            @video-item-click="videoSelect(item.ytId)"
+            @delete-video-item="deleteVideo(item.id)"
           />
         </div>
       </div>
     </div>
 
     <el-dialog
+      v-model="newVideoVisible"
       class="new_video_dialog"
       title="新增 Youtube 影片"
-      v-model="newVideoVisible"
     >
       <div>
         <p class="input_name">Youtube 影片 ID:</p>
@@ -106,14 +107,14 @@
 <script lang="ts" setup>
 /* eslint-disable  no-unused-vars */
 import axios from 'axios'
-import { ref, computed, onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import { apiCreateVideo } from '@/utils/apiHelper'
 import { toast } from '@/utils/utils'
 import YtIframe from '@/components/YtIframeComponent.vue'
 import VideoItem from '@/components/VideoItemComponent.vue'
 
 const props = defineProps<{
-  id: String
+  id: string
 }>()
 
 // 影片清單相關
@@ -140,7 +141,7 @@ async function createVideo() {
   try {
     const res = await apiCreateVideo({
       ytId: newVideoId.value,
-      listId: props.id
+      collectionId: props.id
     })
     if (res.data && res.status >= 200 && res.status < 400) {
       toast({ msg: '影片建立成功' })

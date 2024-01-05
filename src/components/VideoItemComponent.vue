@@ -15,8 +15,8 @@
       </p>
     </div>
     <div
-      class="features"
       v-if="editPermission"
+      class="features"
     >
       <span @click="handleDelete">
         <i class="fas fa-trash"></i>
@@ -26,9 +26,9 @@
 </template>
 <script lang="ts" setup>
 const props = defineProps<{
-  name: String
-  pic: String
-  editPermission: Boolean
+  name: string
+  pic: string
+  editPermission?: boolean
 }>()
 const emits = defineEmits(['videoItemClick', 'deleteVideoItem'])
 

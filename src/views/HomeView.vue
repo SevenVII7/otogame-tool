@@ -6,7 +6,10 @@
     <div class="inner w1200">
       <div class="bookmark_box">
         <h5 class="title txt-bold txt-dark_prime">書籤</h5>
-        <div class="bookmark_itembox">
+        <div
+          v-if="false"
+          class="bookmark_itembox"
+        >
           <template
             v-for="i in 3"
             :key="i"
@@ -20,19 +23,13 @@
             </div>
           </template>
         </div>
+        <div v-else>
+          <noDataHint />
+        </div>
       </div>
       <div class="current_box">
         <h5 class="title txt-bold txt-dark_prime">最近活動</h5>
-        <template
-          v-for="item in collectionLists"
-          :key="item.id"
-        >
-          <Collection
-            :id="item.id"
-            :name="item.name"
-            :reload-list-fn="getCollectionList"
-          />
-        </template>
+        <noDataHint />
       </div>
       <div class="list_box">
         <h5 class="title txt-bold txt-dark_prime">合輯</h5>
@@ -93,9 +90,11 @@ import { apiGetCollectionList, apiCreateCollection } from '@/utils/apiHelper'
 import { toast } from '@/utils/utils'
 import Collection from '@/components/CollectionComponent.vue'
 import VideoItem from '@/components/VideoItemComponent.vue'
+import noDataHint from '@/components/noDataHint.vue'
+import type { CollectionListType } from '@/types'
 
 const maxCollection = ref(5)
-const collectionLists = ref([])
+const collectionLists = ref<CollectionListType>([])
 const newListVisible = ref(false)
 const newListName = ref('')
 

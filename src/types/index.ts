@@ -1,12 +1,14 @@
-export type CollectionListType = {
-  id: number
-  name: string
-  created_at: string
-}
-
 export type YtVideoType = {
   id: number
-  yt_id: string
+  ytId: string
   name: string
   pic: string
 }
+
+export type CollectionType = {
+  id: number
+  name: string
+  videoData: YtVideoType[]
+}
+
+export type CollectionListType = Pick<CollectionType, 'id' | 'name'>[]

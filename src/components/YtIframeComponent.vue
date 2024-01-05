@@ -7,20 +7,20 @@
       ></div>
     </div>
     <div
-      class="feature_cover"
       v-show="openFeatureCover"
+      class="feature_cover"
       :style="{ backgroundColor: `rgba(0,0,0,${coverOpacity / 100})` }"
     >
       <div
-        class="cover_feature"
         v-show="openFeatureSetting"
+        class="cover_feature"
       >
-        <small class="tag"> 遮罩不透明度 </small>
+        <small class="tag">遮罩不透明度</small>
         <el-slider v-model="coverOpacity" />
       </div>
       <div
-        class="playing_feature"
         v-show="openFeatureSetting"
+        class="playing_feature"
       >
         <el-button-group>
           <el-button
@@ -66,9 +66,9 @@
 import { ref, computed, onMounted, watch } from 'vue'
 
 const props = defineProps<{
-  ytVideoId: String
-  openFeatureCover: Boolean
-  openFeatureSetting: Boolean
+  ytVideoId: string
+  openFeatureCover: boolean
+  openFeatureSetting: boolean
 }>()
 
 const coverOpacity = ref(50)
