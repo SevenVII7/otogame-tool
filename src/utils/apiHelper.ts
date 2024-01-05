@@ -75,7 +75,7 @@ export const apiDeleteCollection = ({ id }: Pick<CollectionType, 'id'>) => {
 export const apiCreateVideo = ({ ytId, collectionId }: { ytId: string; collectionId: number }) => {
   console.log('apiCreateVideo')
   return apiBase
-    .post('/player_info', { ytId, collectionId })
+    .post('/player_info', { ytId, listId: collectionId })
     .then(function (response) {
       return response
     })

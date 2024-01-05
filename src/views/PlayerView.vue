@@ -114,7 +114,7 @@ import YtIframe from '@/components/YtIframeComponent.vue'
 import VideoItem from '@/components/VideoItemComponent.vue'
 
 const props = defineProps<{
-  id: string
+  id: number
 }>()
 
 // 影片清單相關
