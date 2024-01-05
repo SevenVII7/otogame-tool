@@ -12,7 +12,7 @@
             :key="i"
           >
             <div class="bookmark_item">
-              <small class="txt-dark_gray"> 合輯名稱 </small>
+              <small class="txt-dark_gray">合輯名稱</small>
               <VideoItem
                 :pic="'https://i.ytimg.com/vi/YyV9jowj9PY/sddefault.jpg'"
                 :name="'『glow』3DMVゲームサイズ公開！'"
@@ -30,18 +30,19 @@
           <Collection
             :id="item.id"
             :name="item.name"
-            :reloadListFn="getCollectionList"
+            :reload-list-fn="getCollectionList"
           />
         </template>
       </div>
       <div class="list_box">
         <h5 class="title txt-bold txt-dark_prime">合輯</h5>
         <div
-          class="add_item"
           v-if="collectionLists.length < maxCollection"
+          class="add_item"
           @click="openDialog"
         >
-          <i class="fas fa-plus"></i>&nbsp; 建立新合輯 ({{ collectionLists.length }}/{{ maxCollection }})
+          <i class="fas fa-plus"></i>
+          &nbsp; 建立新合輯 ({{ collectionLists.length }}/{{ maxCollection }})
         </div>
         <template
           v-for="item in collectionLists"
@@ -50,16 +51,16 @@
           <Collection
             :id="item.id"
             :name="item.name"
-            :reloadListFn="getCollectionList"
+            :reload-list-fn="getCollectionList"
           />
         </template>
       </div>
     </div>
 
     <el-dialog
+      v-model="newListVisible"
       class="new_name_dialog"
       title="新增合輯"
-      v-model="newListVisible"
     >
       <div>
         <p class="input_name">合輯名稱:</p>

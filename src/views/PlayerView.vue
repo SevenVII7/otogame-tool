@@ -184,7 +184,7 @@ function toggleOpenFeatureSetting() {
 // 取得API資料
 async function getPlayerInfo() {
   await axios
-    .get(`${import.meta.env.VUE_APP_API_KEY}/player_info?id=${props.id}`)
+    .get(`${import.meta.env.VITE_API_KEY}/player_info?id=${props.id}`)
     .then((response) => {
       console.log(response)
       playerData.value.listName = response.data.name
