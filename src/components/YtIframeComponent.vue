@@ -61,7 +61,7 @@
     {{ playingState }} -->
   </div>
 </template>
-<script setup>
+<script lang="ts" setup>
 /* eslint-disable  no-unused-vars */
 import { ref, computed, onMounted, watch } from 'vue'
 
