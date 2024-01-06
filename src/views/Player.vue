@@ -1,16 +1,17 @@
 <template>
   <div id="player">
-    <div class="top">
+    <div class="left_menu">
       <router-link
         :to="{ name: 'Home' }"
         class="back"
       >
         <i class="fas fa-arrow-right"></i>
-        <!-- <img src="@/assets/img/icon/arrow.svg" alt=""> -->
       </router-link>
+      <br />
       <div class="w1200 txt-center">
         {{ playerData.listName }}
       </div>
+      <br />
       <div class="top_btns">
         <el-button-group>
           <el-button
