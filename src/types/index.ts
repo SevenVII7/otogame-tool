@@ -10,5 +10,9 @@ export type CollectionType = {
   name: string
   videoData: YtVideoType[]
 }
-
 export type CollectionListType = Pick<CollectionType, 'id' | 'name'>[]
+
+export type YtVideoBookmarks = {
+  collectionData: Pick<CollectionType, 'id' | 'name'>
+  videoData: YtVideoType
+}

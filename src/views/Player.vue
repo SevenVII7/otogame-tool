@@ -110,8 +110,9 @@ import axios from 'axios'
 import { ref, onMounted } from 'vue'
 import { apiCreateVideo } from '@/utils/apiHelper'
 import { toast } from '@/utils/utils'
-import YtIframe from '@/components/YtIframeComponent.vue'
+import YtIframe from './Player/YtIframeComponent.vue'
 import VideoItem from '@/components/VideoItemComponent.vue'
+import type { YtVideoType } from '@/types'
 
 const props = defineProps<{
   id: number
@@ -121,6 +122,7 @@ const props = defineProps<{
 const newVideoVisible = ref(false)
 const newVideoId = ref('')
 const videoListLightboxOpen = ref(true)
+
 function toggleListLightbox() {
   videoListLightboxOpen.value = !videoListLightboxOpen.value
 }
@@ -157,21 +159,21 @@ async function createVideo() {
     closeDialog()
   }
 }
-function deleteVideo() {
-  console.log('deleteVideo')
+function deleteVideo(videoId: number) {
+  console.log(`deleteVideo: ${videoId}`)
 }
 
 // 播放器相關
-const ytVideoId = ref()
-const playerData = ref({
+const ytVideoId = ref('')
+const playerData = ref<{ listName: string | null; videoData: YtVideoType[] }>({
   listName: null,
   videoData: []
 })
 const openFeatureCover = ref(false)
 const openFeatureSetting = ref(true)
-function videoSelect(videoId) {
+function videoSelect(ytId: string) {
   videoListLightboxOpen.value = false
-  ytVideoId.value = videoId
+  ytVideoId.value = ytId
 }
 function toggleOpenFeatureCover() {
   openFeatureCover.value = !openFeatureCover.value
@@ -202,4 +204,3 @@ onMounted(() => {
   getPlayerInfo()
 })
 </script>
-<style scoped lang="scss" src="@/assets/scss/page/player.scss"></style>

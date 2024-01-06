@@ -10,5 +10,8 @@
 @import './setting/_animation.scss';
 
 @import '../lib/fontawesome/css/all.css';
-
 @import './public';
+
+@import './view/home';
+@import './view/login';
+@import './view/player';

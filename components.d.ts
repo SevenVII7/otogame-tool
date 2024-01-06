@@ -8,6 +8,8 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     CollectionComponent: typeof import('./src/components/CollectionComponent.vue')['default']
+    CollectionItem: typeof import('./src/components/CollectionItem.vue')['default']
+    CollectionList: typeof import('./src/components/CollectionList.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElButtonGroup: typeof import('element-plus/es')['ElButtonGroup']
     ElDialog: typeof import('element-plus/es')['ElDialog']
@@ -26,7 +28,9 @@ declare module 'vue' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     TheWelcome: typeof import('./src/components/TheWelcome.vue')['default']
+    VideoBookmarks: typeof import('./src/components/VideoBookmarks.vue')['default']
     VideoItemComponent: typeof import('./src/components/VideoItemComponent.vue')['default']
+    VideoList: typeof import('./src/components/VideoList.vue')['default']
     WelcomeItem: typeof import('./src/components/WelcomeItem.vue')['default']
     YtIframeComponent: typeof import('./src/components/YtIframeComponent.vue')['default']
   }
