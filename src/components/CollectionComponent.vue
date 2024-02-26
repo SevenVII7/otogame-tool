@@ -52,7 +52,7 @@ import axios from 'axios'
 const props = defineProps<{
   id: Number
   name: String
-  reloadListFn: Function
+  reloadListFn: () => void
 }>()
 
 const rename = ref()
