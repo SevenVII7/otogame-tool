@@ -6,6 +6,8 @@ import 'element-plus/dist/index.css'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 
+import '@/assets/scss/main.scss'
+
 import App from './App.vue'
 import router from './router'
 

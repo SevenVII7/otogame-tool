@@ -3,9 +3,18 @@ require('@rushstack/eslint-patch/modern-module-resolution')
 
 module.exports = {
   root: true,
-  extends: ['plugin:vue/vue3-essential', 'eslint:recommended', '@vue/eslint-config-typescript', '@vue/eslint-config-prettier/skip-formatting'],
+  // extends: ['plugin:vue/vue3-essential', 'eslint:recommended', '@vue/eslint-config-typescript', '@vue/eslint-config-prettier/skip-formatting'],
+  extends: [
+    'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:vue/vue3-recommended',
+    'plugin:prettier/recommended',
+    'eslint-config-prettier'
+  ],
   parserOptions: {
-    ecmaVersion: 'latest'
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+    parser: '@typescript-eslint/parser' // 加這個可以 format ts 檔
   },
   plugins: ['vue', '@typescript-eslint', 'prettier'],
   rules: {
@@ -23,7 +32,7 @@ module.exports = {
       }
     ],
     'no-console': 'off',
-    'no-debugger': import.meta.env.NODE_ENV === 'production' ? 'warn' : 'off',
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'vue/v-slot-style': 'off',
     'vue/multi-word-component-names': 'off',
     'no-control-regex': 0,

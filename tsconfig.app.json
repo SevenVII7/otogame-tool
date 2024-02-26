@@ -10,11 +10,21 @@
   ],
   "exclude": ["src/**/__tests__/*"],
   "compilerOptions": {
+    "target": "ESNext",
     "composite": true,
     "noEmit": true,
     "baseUrl": ".",
+    "sourceMap": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "lib": ["ESNext", "DOM"],
+    "skipLibCheck": true,
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["src/*"],
+      "@views/*": ["src/views/*"],
+      "@images/*": ["src/assets/images/*"],
     }
   }
 }

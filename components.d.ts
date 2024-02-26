@@ -7,7 +7,8 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
-    CollectionComponent: typeof import('./src/components/CollectionComponent.vue')['default']
+    CollectionItem: typeof import('./src/components/CollectionItem.vue')['default']
+    CollectionList: typeof import('./src/components/CollectionList.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElButtonGroup: typeof import('element-plus/es')['ElButtonGroup']
     ElDialog: typeof import('element-plus/es')['ElDialog']
@@ -16,17 +17,11 @@ declare module 'vue' {
     ElDropdownMenu: typeof import('element-plus/es')['ElDropdownMenu']
     ElInput: typeof import('element-plus/es')['ElInput']
     ElSlider: typeof import('element-plus/es')['ElSlider']
-    HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
-    IconCommunity: typeof import('./src/components/icons/IconCommunity.vue')['default']
-    IconDocumentation: typeof import('./src/components/icons/IconDocumentation.vue')['default']
-    IconEcosystem: typeof import('./src/components/icons/IconEcosystem.vue')['default']
-    IconSupport: typeof import('./src/components/icons/IconSupport.vue')['default']
-    IconTooling: typeof import('./src/components/icons/IconTooling.vue')['default']
+    NoDataHint: typeof import('./src/components/noDataHint.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    TheWelcome: typeof import('./src/components/TheWelcome.vue')['default']
+    VideoBookmarks: typeof import('./src/components/VideoBookmarks.vue')['default']
     VideoItemComponent: typeof import('./src/components/VideoItemComponent.vue')['default']
-    WelcomeItem: typeof import('./src/components/WelcomeItem.vue')['default']
-    YtIframeComponent: typeof import('./src/components/YtIframeComponent.vue')['default']
+    VideoList: typeof import('./src/components/VideoList.vue')['default']
   }
 }

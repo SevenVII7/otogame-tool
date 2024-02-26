@@ -7,15 +7,14 @@
     </span>
     <el-input
       v-else
-      class="rename_input"
       ref="renameInput"
       v-model="rename"
+      class="rename_input"
       style="margin-right: 30px"
       @click.prevent="() => false"
       @blur="handleRename(false)"
       @change="handleRename(false, { id: id, newName: rename })"
-    >
-    </el-input>
+    ></el-input>
     <div class="features">
       <router-link
         class="features_btn"
@@ -34,8 +33,14 @@
         </span>
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item @click="handleRename(true)"> <i class="fas fa-pen"></i>&nbsp; 重新命名 </el-dropdown-item>
-            <el-dropdown-item @click="deleteCollection(id)"> <i class="fas fa-folder-minus"></i>&nbsp; 刪除 </el-dropdown-item>
+            <el-dropdown-item @click="handleRename(true)">
+              <i class="fas fa-pen"></i>
+              &nbsp; 重新命名
+            </el-dropdown-item>
+            <el-dropdown-item @click="deleteCollection(id)">
+              <i class="fas fa-folder-minus"></i>
+              &nbsp; 刪除
+            </el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
@@ -44,22 +49,21 @@
 </template>
 <script lang="ts" setup>
 /* eslint-disable  no-unused-vars */
-import { ref, computed, onMounted, nextTick } from 'vue'
+import { ref, nextTick } from 'vue'
 import { apiUpdateCollection, apiDeleteCollection } from '@/utils/apiHelper'
 import { toast } from '@/utils/utils'
-import axios from 'axios'
 
 const props = defineProps<{
-  id: Number
-  name: String
+  id: number
+  name: string
   reloadListFn: () => void
 }>()
 
-const rename = ref()
+const rename = ref('')
 const renameStatus = ref(false)
-const renameInput = ref(null)
+const renameInput = ref<HTMLInputElement>()
 
-async function updateCollection(id, name) {
+async function updateCollection(id: number, name: string) {
   try {
     const res = await apiUpdateCollection({ id, name })
     if (res.data) {
@@ -71,7 +75,7 @@ async function updateCollection(id, name) {
     toast({ msg: '更新失敗', type: 'error' })
   }
 }
-async function deleteCollection(id) {
+async function deleteCollection(id: number) {
   try {
     const res = await apiDeleteCollection({ id })
     if (res.data) {
@@ -82,13 +86,15 @@ async function deleteCollection(id) {
     toast({ msg: '刪除失敗', type: 'error' })
   }
 }
-async function handleRename(status, { id, newName } = {}) {
+async function handleRename(status: boolean, { id, newName }: { id?: number; newName?: string } = {}) {
   rename.value = props.name
   renameStatus.value = status
   if (status) {
     await nextTick()
     setTimeout(() => {
-      renameInput.value.focus()
+      if (renameInput.value) {
+        renameInput.value.focus()
+      }
     }, 100)
   }
   if (!status && id && newName) {

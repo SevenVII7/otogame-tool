@@ -5,7 +5,7 @@
     </div>
     <div class="inner w1000">
       <div class="login_form">
-        <h3 class="txt-bold">Sign Up</h3>
+        <h3 class="txt-bold">Login</h3>
         <div class="input_block">
           <el-input placeholder="使用者名稱"></el-input>
         </div>
@@ -14,16 +14,16 @@
         </div>
         <el-button
           type="primary"
-          @click="$router.push('/login')"
+          @click="$router.push('/')"
         >
-          新建使用者
+          登入
         </el-button>
         <el-button
           type="primary"
           plain
-          @click="$router.push('/login')"
+          @click="$router.push('/signup')"
         >
-          回登入頁
+          新建
         </el-button>
       </div>
     </div>
@@ -38,4 +38,3 @@ import { ref, computed, onMounted } from 'vue'
 // onMounted
 onMounted(() => {})
 </script>
-<style scoped src="@/assets/scss/page/login.scss" lang="scss"></style>
