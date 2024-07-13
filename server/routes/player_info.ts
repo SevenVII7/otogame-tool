@@ -27,7 +27,7 @@ router.get('/', (req, res, next) => {
   }
   function getListName(res: Response, listId: number): Promise<{name: string}[]> {
     return new Promise((resolve, reject) => {
-      dbConnection.query('SELECT name FROM movie_list WHERE id = ? LIMIT 1',
+      dbConnection.query('SELECT name FROM collection WHERE id = ? LIMIT 1',
         [listId],
         (err, results) => {
           if (err) {
@@ -50,10 +50,10 @@ router.get('/', (req, res, next) => {
       dbConnection.query(
         `
           SELECT movies.id, movies.yt_id, movies.video_name, movies.img_url
-          FROM movie_list
+          FROM collection
           INNER JOIN movies
-          ON movie_list.id = movies.list_id
-          WHERE movie_list.id = ?
+          ON collection.id = movies.list_id
+          WHERE collection.id = ?
         `,
         [listId],
         (err, results) => {

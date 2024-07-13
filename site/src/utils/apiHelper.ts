@@ -23,7 +23,7 @@ apiBase.interceptors.response.use(
 export const apiGetCollectionList = () => {
   console.log('apiGetCollectionList')
   return apiBase
-    .get('/video_list')
+    .get('/collection')
     .then(function (response) {
       return response
     })
@@ -36,7 +36,7 @@ export const apiGetCollectionList = () => {
 export const apiCreateCollection = ({ name }: Pick<CollectionType, 'name'>) => {
   console.log('createCollection')
   return apiBase
-    .post('/video_list', { name })
+    .post('/collection', { name })
     .then(function (response) {
       return response
     })
@@ -49,7 +49,7 @@ export const apiCreateCollection = ({ name }: Pick<CollectionType, 'name'>) => {
 export const apiUpdateCollection = ({ id, name }: Pick<CollectionType, 'id' | 'name'>) => {
   console.log('apiUpdateCollection')
   return apiBase
-    .patch('/video_list', { id, name })
+    .patch('/collection', { id, name })
     .then(function (response) {
       return response
     })
@@ -62,11 +62,24 @@ export const apiUpdateCollection = ({ id, name }: Pick<CollectionType, 'id' | 'n
 export const apiDeleteCollection = ({ id }: Pick<CollectionType, 'id'>) => {
   console.log('apiDeleteCollection')
   return apiBase
-    .delete('/video_list', { data: { id } })
+    .delete('/collection', { data: { id } })
     .then(function (response) {
       return response
     })
     .catch(function (error) {
+      return error.response
+    })
+}
+
+// 取得影片
+export const apiGetVideo = ({ id }: { id: number }) => {
+  console.log('apiGetVideo')
+  return apiBase
+    .get(`/player_info?id=${id}`)
+    .then((response) => {
+      return response
+    })
+    .catch((error) => {
       return error.response
     })
 }

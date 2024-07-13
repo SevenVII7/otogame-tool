@@ -109,7 +109,7 @@
 /* eslint-disable  no-unused-vars */
 import axios from 'axios'
 import { ref, onMounted } from 'vue'
-import { apiCreateVideo } from '@/utils/apiHelper'
+import { apiCreateVideo, apiGetVideo } from '@/utils/apiHelper'
 import { toast } from '@/utils/utils'
 import YtIframe from './Player/YtIframeComponent.vue'
 import VideoItem from '@/components/VideoItemComponent.vue'
@@ -186,18 +186,18 @@ function toggleOpenFeatureCover() {
 function toggleOpenFeatureSetting() {
   openFeatureSetting.value = !openFeatureSetting.value
 }
+
 // 取得API資料
 async function getPlayerInfo() {
-  await axios
-    .get(`${import.meta.env.VITE_API_KEY}/player_info?id=${props.id}`)
-    .then((response) => {
-      console.log(response)
-      playerData.value.listName = response.data.name
-      playerData.value.videoData = response.data.videoData
-    })
-    .catch((err) => {
-      console.log(err.response)
-    })
+  try {
+    const res = await apiGetVideo({ id: props.id })
+    playerData.value.listName = res.data.name
+    playerData.value.videoData = res.data.videoData
+  } catch {
+    playerData.value.listName = ''
+    playerData.value.videoData = []
+    toast({ msg: '無法取得影片', type: 'error' })
+  }
 }
 
 // onMounted
