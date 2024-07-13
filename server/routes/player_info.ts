@@ -49,10 +49,10 @@ router.get('/', (req, res, next) => {
     return new Promise((resolve, reject) => {
       dbConnection.query(
         `
-          SELECT movies.id, movies.yt_id, movies.video_name, movies.img_url
+          SELECT video.id, video.yt_id, video.video_name, video.img_url
           FROM collection
-          INNER JOIN movies
-          ON collection.id = movies.list_id
+          INNER JOIN video
+          ON collection.id = video.list_id
           WHERE collection.id = ?
         `,
         [listId],
@@ -129,7 +129,7 @@ router.post('/', (req, res, next) => {
   }){
     return new Promise((resolve, reject) => {
       dbConnection.query(
-        'INSERT INTO movies(list_id, yt_id, video_name, img_url) VALUES(?,?,?,?)',
+        'INSERT INTO video(list_id, yt_id, video_name, img_url) VALUES(?,?,?,?)',
         [ listId, ytId, videoName, imgUrl ],
         (err, results) => {
           if (err) {
@@ -198,7 +198,7 @@ router.post('/', (req, res, next) => {
 router.delete('/', (req, res, next) => {
   dbConnection.query(
     `
-      DELETE FROM movies WHERE movies.id = ?;
+      DELETE FROM video WHERE video.id = ?;
     `,
     [
       req.body.id,
