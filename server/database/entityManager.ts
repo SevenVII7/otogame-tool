@@ -1,4 +1,4 @@
 import { AppDataSource } from "./data-source"
-import { List } from "./entity/List";
+import { Collection } from "./entity/Collection";
 
-export const listRepo = AppDataSource.getRepository(List)
+export const listRepo = AppDataSource.getRepository(Collection)

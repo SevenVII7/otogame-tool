@@ -1,5 +1,5 @@
-import { List } from "./List";
+import { Collection } from "./Collection";
 
 export default [
-  List
+  Collection
 ]

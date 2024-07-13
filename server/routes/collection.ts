@@ -64,10 +64,10 @@ router.patch('/', async (req, res, next)=>{
 router.delete('/', (req,res, next)=>{
   dbConnection.query(
     `
-      DELETE movie_list, movies
-      FROM movie_list
-      LEFT JOIN movies ON movie_list.id = movies.list_id
-      WHERE movie_list.id = ?;
+      DELETE collection, movies
+      FROM collection
+      LEFT JOIN movies ON collection.id = movies.list_id
+      WHERE collection.id = ?;
     `,
     [
       req.body.id,
