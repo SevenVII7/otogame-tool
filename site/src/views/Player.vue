@@ -193,7 +193,7 @@ async function getPlayerInfo() {
     .then((response) => {
       console.log(response)
       playerData.value.listName = response.data.name
-      playerData.value.videoData = response.data.videoData.map((e) => ({ ...e, ytId: e.yt_id }))
+      playerData.value.videoData = response.data.videoData
     })
     .catch((err) => {
       console.log(err.response)

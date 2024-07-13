@@ -1,18 +1,20 @@
-const express = require('express')
-const bodyParser = require('body-parser')
-const path = require('path');
-const app = express()
-const router = require('./routes/index')
-require('dotenv').config()
+import  express from 'express';
+import bodyParser from 'body-parser'
+import cors from 'cors'
+import helmet from 'helmet'
+import dotenv from 'dotenv'
+import router from './routes/index'
 
+const app = express()
+dotenv.config()
+
+// View template
 app.set('view engine', 'ejs')
 
 // CORS
-const cors = require('cors');
 app.use(cors());
 
 // Security
-const helmet = require('helmet');
 app.use(helmet());
 
 app.get('/', (req, res) => {

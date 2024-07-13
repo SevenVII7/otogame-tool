@@ -1,13 +1,31 @@
-const express = require('express')
+import express, { Response } from 'express'
+import axios, { AxiosError } from 'axios'
+import dbConnection from '../config/db'
+
 const router = express.Router()
-const axios = require('axios')
-const dbConnection = require('../config/db')
 require('dotenv').config()
 
 // R - read
 router.get('/', (req, res, next) => {
-  const resultData = {}
-  function getListName(res, listId) {
+  type ResultData = {
+    name: string,
+    videoData: {
+      id: number | null, 
+      ytId: string, 
+      name: string, 
+      pic: string
+    }[]
+  }
+  const resultData: ResultData = {
+    name: '',
+    videoData: [{
+      id: null, 
+      ytId: '', 
+      name: '', 
+      pic: ''
+    }]
+  }
+  function getListName(res: Response, listId: number): Promise<{name: string}[]> {
     return new Promise((resolve, reject) => {
       dbConnection.query('SELECT name FROM movie_list WHERE id = ? LIMIT 1',
         [listId],
@@ -22,7 +40,12 @@ router.get('/', (req, res, next) => {
       );
     });
   }
-  function getListInfo(res, listId) {
+  function getListInfo(res: Response, listId: number): Promise<{
+    id: number, 
+    yt_id: string, 
+    video_name: string, 
+    img_url: string
+  }[]> {
     return new Promise((resolve, reject) => {
       dbConnection.query(
         `
@@ -44,14 +67,17 @@ router.get('/', (req, res, next) => {
       );
     });
   }
-  async function mixSearch(res, listId){
+  async function mixSearch(res: Response, listId: number){
     try {
       const listName = await getListName(res, listId);
       const listInfo = await getListInfo(res, listId);
       resultData.name = listName[0].name
       resultData.videoData = listInfo.map(
         (elem) => ({
-          id: elem.id, yt_id: elem.yt_id, name: elem.video_name, pic: elem.img_url
+          id: elem.id, 
+          ytId: elem.yt_id, 
+          name: elem.video_name, 
+          pic: elem.img_url
         })
       )
       console.log(
@@ -60,14 +86,14 @@ router.get('/', (req, res, next) => {
         'resultData: ', resultData, '\n'
       )
       res.json(resultData)
-    } catch (err) {
+    } catch (err: any) {
       res.status(500).json({msg: err.message})
     }
   }
 
   try {
-    mixSearch(res, req.query.id)
-  } catch (err) {
+    mixSearch(res, Number(req.query.id))
+  } catch (err: any) {
     res.status(500).json({msg: err.message})
   }
 })
@@ -75,7 +101,7 @@ router.get('/', (req, res, next) => {
 // C - creare
 router.post('/', (req, res, next) => {
   // 取得youtube資訊
-  function getVideoData(id) {
+  function getVideoData(id: string) {
     return axios.get(
       `https://www.googleapis.com/youtube/v3/videos?id=${id}&key=${process.env.YT_KEY}&part=snippet,contentDetails,statistics,status`
     ).then((response) => {
@@ -90,7 +116,17 @@ router.post('/', (req, res, next) => {
     })
   }
   // 寫入資料庫
-  function insertNewVideo({res, listId, ytId, videoName, imgUrl} = {}){
+  function insertNewVideo(res: Response, {
+    listId,
+    ytId, 
+    videoName, 
+    imgUrl
+  }: {
+    listId?: number, 
+    ytId?: string, 
+    videoName?: string, 
+    imgUrl?: string
+  }){
     return new Promise((resolve, reject) => {
       dbConnection.query(
         'INSERT INTO movies(list_id, yt_id, video_name, img_url) VALUES(?,?,?,?)',
@@ -107,24 +143,35 @@ router.post('/', (req, res, next) => {
     })
   }
   // 執行
-  async function mixSearch({res, listId, ytId} = {}) {
+  async function mixSearch(
+    res: Response,
+    {
+      listId, 
+      ytId
+    } : {
+      listId: number, 
+      ytId: string
+    }
+  ) {
     const ytData = await getVideoData(ytId)
     if (ytData) {
-      const result = await insertNewVideo({
+      const result = await insertNewVideo(
         res,
-        listId,
-        ytId, 
-        videoName: ytData.title,
-        imgUrl: (() => {
-          if (ytData.thumbnails?.standard?.url) {
-            return ytData.thumbnails?.standard?.url
-          } else if (ytData.thumbnails?.medium?.url) {
-            return ytData.thumbnails?.medium?.url
-          } else if (ytData.thumbnails?.default?.url) {
-            return ytData.thumbnails?.default?.url
-          }
-        })()
-      })
+        {
+          listId,
+          ytId, 
+          videoName: ytData.title,
+          imgUrl: (() => {
+            if (ytData.thumbnails?.standard?.url) {
+              return ytData.thumbnails?.standard?.url
+            } else if (ytData.thumbnails?.medium?.url) {
+              return ytData.thumbnails?.medium?.url
+            } else if (ytData.thumbnails?.default?.url) {
+              return ytData.thumbnails?.default?.url
+            }
+          })()
+        }
+      )
       console.log(
         'ytData', ytData, '\n',
         'result', result
@@ -135,12 +182,14 @@ router.post('/', (req, res, next) => {
     }
   }
   try {
-    mixSearch({
+    mixSearch(
       res,
-      listId: req.body.listId,
-      ytId: req.body.ytId,
-    })
-  } catch (err) {
+      {
+        listId: req.body.listId,
+        ytId: req.body.ytId,
+      }
+    )
+  } catch (err: any) {
     res.status(500).json({msg: err.message})
   }
 })
@@ -154,7 +203,7 @@ router.delete('/', (req, res, next) => {
     [
       req.body.id,
     ],
-    (err,result)=>{
+    (err, result)=>{
       console.log(req.body)
       if (err) {
         res.status(500).json({msg: err.message})
@@ -164,4 +213,4 @@ router.delete('/', (req, res, next) => {
   )
 })
 
-module.exports = router
+export default router

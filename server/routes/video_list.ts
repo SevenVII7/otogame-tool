@@ -1,6 +1,7 @@
-const express = require('express')
+import express from 'express'
+import dbConnection from '../config/db'
+
 const router = express.Router()
-const dbConnection = require('../config/db')
 
 // R - read
 router.get('/', (req, res, next) => {
@@ -76,4 +77,4 @@ router.delete('/', (req,res, next)=>{
   )
 })
 
-module.exports = router
+export default router
