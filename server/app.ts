@@ -1,9 +1,11 @@
-import  express from 'express';
+import  express from 'express'
 import bodyParser from 'body-parser'
 import cors from 'cors'
 import helmet from 'helmet'
 import dotenv from 'dotenv'
 import router from './routes/index'
+import { AppDataSource } from './database/data-source'
+import 'reflect-metadata'
 
 const app = express()
 dotenv.config()
@@ -24,6 +26,9 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 app.use('/api', router)
 
-app.listen(process.env.PORT, ()=>{
-  console.log('Server is listening on port ' + process.env.PORT)
-})
+;(async () => {
+  await AppDataSource.initialize()
+  app.listen(process.env.PORT, () => {
+    console.log('Server is listening on port ' + process.env.PORT)
+  })
+})()

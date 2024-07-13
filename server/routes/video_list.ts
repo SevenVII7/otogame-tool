@@ -1,58 +1,63 @@
 import express from 'express'
+import { Not } from 'typeorm';
 import dbConnection from '../config/db'
+import { listRepo } from "../database/entityManager";
 
 const router = express.Router()
 
 // R - read
-router.get('/', (req, res, next) => {
-  //query('sql',(err,result))
-  dbConnection.query(
-    'SELECT * FROM movie_list ORDER BY created_at DESC',
-    (err, result) => {
-      if (err) {
-        res.status(500).json({msg: err.message})
-      }
-      res.json(result)
-    }
-  )
+router.get('/', async (req, res, next) => {
+  try {
+    const result = await listRepo.find()
+    res.json(result)
+  } catch (err) {
+    res.status(500).json({msg: err})
+  }
 })
 
 // C - creare
-router.post('/', (req,res, next) => {
-  if (req.body.name) {
-    dbConnection.query(
-      'INSERT INTO movie_list(name) VALUES(?)',
-      [
-        req.body.name,
-      ],
-      (err, result) => {
-        if (err) {
-          res.status(500).json({msg: err.message})
-        }
-        res.send('inset successfully')
-      }
-    )
-  } else {
-    res.status(402)
-    res.send('failed')
+router.post('/', async (req,res, next) => {
+  if (!req.body.name) return res.status(402).send('name is required')
+  try {
+    const allList = await listRepo.find();
+    if (allList.length >= 5) {
+      return res.send('Max to 5 list')
+    }
+
+    const existingList = await listRepo.findOne({
+      where: { name: req.body.name }
+    })
+    if (existingList) {
+      return res.send('Name already exists')
+    }
+
+    await listRepo.save({
+      name: req.body.name
+    })
+    res.send('Inset successfully')
+  } catch (err: any) {
+    res.status(500).json({ msg: err.message })
   }
 })
 
 // U - update
-router.patch('/', (req, res, next)=>{
-  dbConnection.query(
-    'UPDATE movie_list set name=? where id=?',
-    [
-      req.body.name,
-      req.body.id,
-    ],
-    (err,result)=>{
-      if (err) {
-        res.status(500).json({msg: err.message})
-      }
+router.patch('/', async (req, res, next)=>{
+  try {
+    const updateResult = await listRepo.update(
+      {
+        id: req.body.id, 
+        name: Not(req.body.name) 
+      },
+      { name: req.body.name }
+    )
+    if (updateResult.affected) {
       res.send('update successfully')
+    } else {
+      res.send('No updated')
     }
-  )
+  } catch (err: any) {
+    res.status(500).json({ msg: err.message })
+  }
 })
 
 // D - delete
