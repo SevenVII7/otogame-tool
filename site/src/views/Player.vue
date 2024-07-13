@@ -165,7 +165,7 @@ function deleteVideo(videoId: number) {
 }
 
 // 播放器相關
-const ytVideoId = ref('')
+const ytVideoId = ref<string>('')
 const playerData = ref<{ listName: string | null; videoData: YtVideoType[] }>({
   listName: null,
   videoData: []
@@ -173,6 +173,7 @@ const playerData = ref<{ listName: string | null; videoData: YtVideoType[] }>({
 const openFeatureCover = ref(false)
 const openFeatureSetting = ref(true)
 function videoSelect(ytId: string) {
+  console.log('ytVideoId', ytVideoId.value)
   videoListLightboxOpen.value = false
   ytVideoId.value = ytId
 }
@@ -192,7 +193,7 @@ async function getPlayerInfo() {
     .then((response) => {
       console.log(response)
       playerData.value.listName = response.data.name
-      playerData.value.videoData = response.data.videoData
+      playerData.value.videoData = response.data.videoData.map((e) => ({ ...e, ytId: e.yt_id }))
     })
     .catch((err) => {
       console.log(err.response)

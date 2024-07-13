@@ -150,7 +150,8 @@ function stopVideo() {
 function getDuration() {
   currentTime.value = player.value.getCurrentTime()
 }
-function getVideoById(id) {
+function getVideoById(id: string) {
+  console.log(`http://www.youtube.com/v/${id}?version=3`)
   player.value.loadVideoByUrl({
     mediaContentUrl: `http://www.youtube.com/v/${id}?version=3`
   })

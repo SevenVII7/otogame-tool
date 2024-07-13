@@ -24,6 +24,9 @@ coverage
 env.prod
 env.develop
 
+# cert
+*.pem
+
 # Log files
 npm-debug.log*
 yarn-debug.log*
